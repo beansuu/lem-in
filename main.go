@@ -18,7 +18,7 @@ func main() {
 	for i, room := range shortestPath {
 		fmt.Printf("L%d-%s ", i+1, room)
 	}
-	fmt.Println() // Print a new line at the end
+	fmt.Println()
 
 	// fmt.Printf("%+v\n", antNest)
 }
