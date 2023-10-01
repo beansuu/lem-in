@@ -12,5 +12,13 @@ func main() {
 		return
 	}
 	antNest := ant.ParseNest(os.Args[1])
-	fmt.Printf("%+v\n", antNest)
+
+	shortestPath := antNest.FindShortestPath()
+	fmt.Println(len(shortestPath))
+	for i, room := range shortestPath {
+		fmt.Printf("L%d-%s ", i+1, room)
+	}
+	fmt.Println() // Print a new line at the end
+
+	// fmt.Printf("%+v\n", antNest)
 }

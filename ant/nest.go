@@ -89,3 +89,41 @@ func parseTunnel(s string) (string, string) {
 	}
 	return parts[0], parts[1]
 }
+
+func (an AntNest) DFS(startRoom string, visited map[string]bool, path []string, allPaths *[][]string) {
+	visited[startRoom] = true
+	currentPath := append([]string{}, path...) // the '...' create a copy of the current path
+
+	if startRoom == an.end {
+		*allPaths = append(*allPaths, currentPath)
+	} else {
+		for _, room := range an.tunnels[startRoom] {
+			if !visited[room] {
+				an.DFS(room, visited, append(currentPath, room), allPaths)
+			}
+		}
+	}
+
+	// backtrack
+	delete(visited, startRoom)
+}
+
+func (an AntNest) FindShortestPath() []string {
+	visited := make(map[string]bool)
+	var allPaths [][]string
+	an.DFS(an.start, visited, []string{}, &allPaths)
+
+	if len(allPaths) == 0 {
+		panic("No path found from start to end")
+	}
+
+	// this will find the shortest path among allPaths
+	shortestPath := allPaths[0]
+	// for _, path := range allPaths {
+	// 	if len(path) < len(shortestPath) {
+	// 		shortestPath = path
+	// 	}
+	// }
+
+	return shortestPath
+}
